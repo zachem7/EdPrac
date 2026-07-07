@@ -1,0 +1,104 @@
+seed: 42
+device: auto
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  annotations_csv: null
+  image_extensions: [".jpg", ".jpeg", ".png", ".ppm"]
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  image_size: 512
+  num_classes: 43
+  class_names:
+    - speed_limit_20
+    - speed_limit_30
+    - speed_limit_50
+    - speed_limit_60
+    - speed_limit_70
+    - speed_limit_80
+    - restriction_ends_80
+    - speed_limit_100
+    - speed_limit_120
+    - no_overtaking
+    - no_overtaking_trucks
+    - priority_at_next_intersection
+    - priority_road
+    - give_way
+    - stop
+    - no_traffic_both_ways
+    - no_trucks
+    - no_entry
+    - danger
+    - bend_left
+    - bend_right
+    - bend
+    - uneven_road
+    - slippery_road
+    - road_narrows
+    - construction
+    - traffic_signal
+    - pedestrian_crossing
+    - school_crossing
+    - cycles_crossing
+    - snow
+    - animals
+    - restriction_ends
+    - go_right
+    - go_left
+    - go_straight
+    - go_right_or_straight
+    - go_left_or_straight
+    - keep_right
+    - keep_left
+    - roundabout
+    - restriction_ends_overtaking
+    - restriction_ends_overtaking_trucks
+
+training:
+  epochs: 100
+  batch_size: 4
+  learning_rate: 0.0005
+  weight_decay: 0.0005
+  optimizer: adamw
+  num_workers: 2
+  pretrained: true
+  save_dir: results/logs
+
+evaluation:
+  score_threshold: 0.25
+  iou_threshold: 0.5
+
+models:
+  yolov8n:
+    type: yolo
+    weights: yolov8n.pt
+    image_size: 512
+  fasterrcnn_mobilenet:
+    type: torchvision
+    architecture: fasterrcnn_mobilenet_v3_large_fpn
+  ssdlite:
+    type: torchvision
+    architecture: ssdlite320_mobilenet_v3_large
+  efficientdet_d0:
+    type: efficientdet
+    architecture: tf_efficientdet_d0
+    image_size: 512
+    learning_rate: 0.00005
+    score_threshold: 0.01
+    top_k: 100
+  detr_resnet50:
+    type: detr
+    architecture: detr_resnet50
+    pretrained_name: facebook/detr-resnet-50
+    num_queries: 100
+    learning_rate: 0.00001
+    score_threshold: 0.01
+    top_k: 100
+    grad_clip: 0.1
+
+results:
+  metrics_csv: results/metrics/experiments.csv
+  metrics_jsonl: results/metrics/experiments.jsonl
+  plots_dir: results/plots
