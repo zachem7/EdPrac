@@ -1,43 +1,5 @@
 # Проект для учебной практики
 
-## Что реализовано
-
-- подготовка датасета GTSDB;
-- разбиение данных на `train / val / test`;
-- YOLO-разметка для Ultralytics YOLOv8;
-- PyTorch Dataset для Faster R-CNN, SSD, EfficientDet и DETR;
-- анализ датасета и построение графиков;
-- обучение пяти моделей:
-  - `yolov8n`;
-  - `fasterrcnn_mobilenet`;
-  - `ssdlite`;
-  - `efficientdet_d0`;
-  - `detr_resnet50`;
-- сохранение гиперпараметров и метрик после обучения;
-- построение графиков сравнения моделей.
-
-## Структура проекта
-
-```text
-configs/
-  default.yaml
-data/
-  raw/
-  processed/
-src/
-  dataset/
-  evaluation/
-  models/
-  training/
-  utils/
-results/
-  logs/
-  metrics/
-  plots/
-main.py
-requirements.txt
-```
-
 ## Подготовка датасета
 
 Положить датасет GTSDB в папку `data/raw/`.
@@ -61,15 +23,13 @@ python main.py prepare --config configs/default.yaml
 
 После выполнения появится папка `data/processed/` с подготовленными данными.
 
-## Анализ датасета
-
-Команда:
+Анализ датасета;
 
 ```bash
 python main.py analyze --config configs/default.yaml
 ```
 
-Она строит таблицы и графики по датасету:
+Команда строит таблицы и графики по датасету:
 
 - распределение объектов по классам;
 - анализ размеров bounding box.
@@ -120,16 +80,16 @@ results/metrics/experiments.jsonl
 python main.py plot --config configs/default.yaml
 ```
 
-Графики сохраняются в:
+Они сохраняются в:
 
 ```text
 results/plots/
 ```
 
-Команда строит:
+Команда:
 
-- сравнение моделей по `mAP`, `mAP50`, `Precision`, `Recall`, `F1`;
-- графики обучения по эпохам для каждой модели.
+- сравнивает моделей по `mAP`, `mAP50`, `Precision`, `Recall`, `F1`;
+- строит графики обучения по эпохам для каждой модели.
 
 ## Основные настройки
 
